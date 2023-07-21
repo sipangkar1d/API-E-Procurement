@@ -1,6 +1,5 @@
 package com.enigma.procurement.entity;
 
-import com.enigma.procurement.entity.constant.PCategory;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -22,6 +21,5 @@ public class Category {
     @Column(name = "category_id")
     private String id;
 
-    @Enumerated(EnumType.STRING)
-    private PCategory category;
+    private String category;
 }

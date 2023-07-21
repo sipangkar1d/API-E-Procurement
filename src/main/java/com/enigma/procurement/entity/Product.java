@@ -39,6 +39,6 @@ public class Product {
     @JsonManagedReference
     private List<ProductPrice> productPrices;
 
-    @Column(name = "is_deleted")
-    private Boolean isDeleted;
+    @Column(name = "is_active")
+    private Boolean isActive;
 }
