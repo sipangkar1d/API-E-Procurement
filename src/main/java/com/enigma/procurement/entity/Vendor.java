@@ -26,4 +26,7 @@ public class Vendor {
 
     @Column(name = "mobile_phone")
     private String mobilePhone;
+
+    @Column(name = "address")
+    private String address;
 }
