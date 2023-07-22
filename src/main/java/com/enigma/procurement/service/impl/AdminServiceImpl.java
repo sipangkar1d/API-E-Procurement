@@ -14,7 +14,7 @@ public class AdminServiceImpl implements AdminService {
     private final AdminRepository adminRepository;
 
     @Override
-    public Admin createAdmin(Admin request) {
+    public Admin create(Admin request) {
         return adminRepository.save(request);
     }
 

@@ -3,8 +3,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.web.server.ResponseStatusException;
 
 public enum ERole {
-    ROLE_ADMIN,
-    ROLE_VENDOR;
+    ROLE_SUPER_ADMIN,
+    ROLE_ADMIN;
 
     public static ERole get(String val) {
         for (ERole eRole : ERole.values()) {
