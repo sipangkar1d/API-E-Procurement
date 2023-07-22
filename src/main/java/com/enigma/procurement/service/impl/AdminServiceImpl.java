@@ -8,6 +8,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
 
+import java.util.Optional;
+
 @RequiredArgsConstructor
 @Service
 public class AdminServiceImpl implements AdminService {
@@ -28,5 +30,10 @@ public class AdminServiceImpl implements AdminService {
     public Admin findById(String id) {
         return adminRepository.findById(id)
                 .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Admin Not Found"));
+    }
+
+    @Override
+    public Optional<Admin> findByEmail(String email) {
+        return adminRepository.findAdminByEmail(email);
     }
 }

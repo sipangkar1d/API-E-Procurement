@@ -7,7 +7,4 @@ import org.springframework.data.jpa.repository.Query;
 
 
 public interface ProductRepository extends JpaRepository<Product, String> , JpaSpecificationExecutor<Product> {
-
-    @Query(value = "SELECT COUNT(id) FROM Product", nativeQuery=true)
-    int countAll();
 }

@@ -21,6 +21,8 @@ public class Admin {
 
     @Column(name = "name")
     String name;
+    @Column(name = "email")
+    String email;
 
     @OneToOne
     @JoinColumn(name = "user_credential_id")

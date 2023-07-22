@@ -15,11 +15,11 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
-
 @Component
 @Slf4j
 @RequiredArgsConstructor
-public class AuthTokenFilter extends OncePerRequestFilter {
+
+public class AuthTokenFilter  extends OncePerRequestFilter {
     private final UserDetailsService userDetailsService;
     private final JwtUtils jwtUtils;
 
@@ -50,5 +50,5 @@ public class AuthTokenFilter extends OncePerRequestFilter {
         }
         return null;
     }
-}
 
+}

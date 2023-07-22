@@ -10,15 +10,17 @@ import org.springframework.stereotype.Component;
 
 import java.util.Date;
 
-
 @Component
 @Slf4j
 public class JwtUtils {
-    @Value("${tokonyadia.jwt-secret}")
+    @Value("${procurement.jwt-secret}")
     private String jwtSecret;
 
-    @Value("${tokonyadia.jwt-expiration}")
+    @Value("${procurement.jwt-expiration}")
     private Long jwtExpiration;
+
+    public JwtUtils() {
+    }
 
     public String getEmailByToken(String token) {
         return Jwts.parser().setSigningKey(jwtSecret)

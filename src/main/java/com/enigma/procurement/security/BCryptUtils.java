@@ -4,7 +4,6 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Component;
 
-
 @Component
 @RequiredArgsConstructor
 public class BCryptUtils {
@@ -13,5 +12,4 @@ public class BCryptUtils {
     public String hashPassword(String password) {
         return passwordEncoder.encode(password);
     }
-
 }

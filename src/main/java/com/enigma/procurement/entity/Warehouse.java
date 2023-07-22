@@ -11,20 +11,16 @@ import javax.persistence.*;
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity
-@Table(name = "m_vendor")
-public class Vendor extends BaseEntity<String> {
+@Table(name = "m_warehouse")
+public class Warehouse {
     @Id
     @GenericGenerator(strategy = "uuid2", name = "uuid")
     @GeneratedValue(generator = "uuid")
-    @Column(name = "vendor_id")
+    @Column(name = "warehouse_id")
     private String id;
 
-    @Column(name = "name")
-    private String name;
-
-    @Column(name = "mobile_phone")
-    private String mobilePhone;
-
-    @Column(name = "address")
-    private String address;
+    @OneToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "product_id")
+    private Product product;
+    private Integer quantity;
 }

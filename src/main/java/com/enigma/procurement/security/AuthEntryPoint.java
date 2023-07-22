@@ -1,6 +1,5 @@
 package com.enigma.procurement.security;
 
-
 import com.enigma.procurement.model.response.CommonResponse;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.RequiredArgsConstructor;
@@ -30,4 +29,5 @@ public class AuthEntryPoint implements AuthenticationEntryPoint {
         response.setStatus(commonResponse.getStatusCode());
         response.getWriter().write(commonResponseString);
     }
+
 }

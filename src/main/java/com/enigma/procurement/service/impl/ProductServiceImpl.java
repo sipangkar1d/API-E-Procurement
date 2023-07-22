@@ -40,9 +40,9 @@ public class ProductServiceImpl implements ProductService {
     @Transactional(rollbackOn = Exception.class)
     @Override
     public ProductResponse create(ProductRequest request) {
-        Vendor vendor = vendorService.getById(request.getId());
+        Vendor vendor = vendorService.getById(request.getVendorId());
         Category category = categoryService.getOrSave(request.getCategory());
-
+        System.out.println(category);
         Product product = Product.builder().build();
         productRepository.saveAndFlush(product);
 
@@ -144,7 +144,7 @@ public class ProductServiceImpl implements ProductService {
     }
 
     private String generateProductCode() {
-        int productSize = productRepository.countAll();
+        long productSize = productRepository.findAll().size();
         return String.format("KB%04d", productSize + 1);
     }
 

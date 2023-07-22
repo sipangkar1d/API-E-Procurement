@@ -2,24 +2,22 @@ package com.enigma.procurement.entity;
 
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jdk.jfr.Enabled;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 import org.hibernate.annotations.GenericGenerator;
 
 import javax.persistence.*;
 import java.util.List;
 
-@Data
+@Getter
+@Setter
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder(toBuilder = true)
 @Entity
 @Table(name = "m_product")
-public class Product {
+public class Product extends BaseEntity<String> {
     @Id
-    @GenericGenerator(strategy = "uuid2" , name = "uuid")
+    @GenericGenerator(strategy = "uuid2", name = "uuid")
     @GeneratedValue(generator = "uuid")
     @Column(name = "product_id")
     private String id;

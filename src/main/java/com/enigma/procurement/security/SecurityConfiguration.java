@@ -21,7 +21,6 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
         prePostEnabled = true
 )
 @RequiredArgsConstructor
-
 public class SecurityConfiguration {
     private final AuthTokenFilter authTokenFilter;
 
@@ -44,9 +43,10 @@ public class SecurityConfiguration {
                 .exceptionHandling().authenticationEntryPoint(authEntryPoint).and()
                 .exceptionHandling().accessDeniedHandler(forbiddenEntryPoint).and()
                 .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS).and()
-                .authorizeRequests().anyRequest().authenticated().and()
+                .authorizeRequests()
+                .antMatchers("/api/v1/auth/login").permitAll()
+                .anyRequest().authenticated().and()
                 .addFilterBefore(authTokenFilter, UsernamePasswordAuthenticationFilter.class)
                 .build();
     }
-
 }

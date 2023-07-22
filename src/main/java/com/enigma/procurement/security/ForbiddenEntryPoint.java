@@ -1,13 +1,10 @@
 package com.enigma.procurement.security;
 
-
 import com.enigma.procurement.model.response.CommonResponse;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.RequiredArgsConstructor;
-import org.springframework.http.HttpStatus;
 import org.springframework.security.access.AccessDeniedException;
 import org.springframework.security.web.access.AccessDeniedHandler;
-import org.springframework.security.web.authentication.Http403ForbiddenEntryPoint;
 import org.springframework.stereotype.Component;
 
 import javax.servlet.ServletException;
@@ -19,6 +16,7 @@ import java.io.IOException;
 @RequiredArgsConstructor
 public class ForbiddenEntryPoint implements AccessDeniedHandler {
     private final ObjectMapper objectMapper;
+
 
     @Override
     public void handle(HttpServletRequest request, HttpServletResponse response, AccessDeniedException accessDeniedException) throws IOException, ServletException {
@@ -34,4 +32,3 @@ public class ForbiddenEntryPoint implements AccessDeniedHandler {
         response.getWriter().write(commonResponseString);
     }
 }
-
