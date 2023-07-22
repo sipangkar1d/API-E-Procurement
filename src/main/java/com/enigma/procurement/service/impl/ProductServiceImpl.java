@@ -66,23 +66,10 @@ public class ProductServiceImpl implements ProductService {
 
 
     @Override
-    public Page<ProductResponse> getAll(String name, Long maxPrice, Integer page, Integer size) {
-        Specification<Product> specification = (root, query, criteriaBuilder) -> {
-            Join<Product, ProductPrice> productPrices = root.join("productPrices");
-            List<Predicate> predicates = new ArrayList<>();
-            if (name != null) {
-                predicates.add(criteriaBuilder.like(criteriaBuilder.lower(root.get("name")), "%" + name.toLowerCase() + "%"));
-            }
-
-            if (maxPrice != null) {
-                predicates.add(criteriaBuilder.lessThanOrEqualTo(productPrices.get("price"), maxPrice));
-            }
-
-            return query.where(predicates.toArray(new Predicate[]{})).getRestriction();
-        };
-
+    public Page<ProductResponse> getAll(Integer page, Integer size) {
         Pageable pageable = PageRequest.of(page, size);
-        Page<Product> products = productRepository.findAll(specification, pageable);
+
+        Page<Product> products = productRepository.findAll(pageable);
         List<ProductResponse> productResponses = new ArrayList<>();
 
         for (Product product : products.getContent()) {
@@ -99,6 +86,7 @@ public class ProductServiceImpl implements ProductService {
     }
 
 
+    @Transactional(rollbackOn = Exception.class)
     @Override
     public ProductResponse update(ProductRequest request) {
         Product product = findById(request.getId());
@@ -141,8 +129,12 @@ public class ProductServiceImpl implements ProductService {
 
     @Override
     public Product findById(String id) {
-        return productRepository.findById(id)
+        Product product = productRepository.findById(id)
                 .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Product Not Found"));
+        if (product.getIsActive().equals(false))
+            throw new ResponseStatusException(HttpStatus.GONE, "Product Was Not Active");
+
+        return product;
     }
 
     private static Optional<ProductPrice> getProductPrice(Product product) {
