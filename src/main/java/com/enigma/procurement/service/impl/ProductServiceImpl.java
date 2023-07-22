@@ -27,7 +27,6 @@ import javax.transaction.Transactional;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
-import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
@@ -82,15 +81,18 @@ public class ProductServiceImpl implements ProductService {
             return query.where(predicates.toArray(new Predicate[]{})).getRestriction();
         };
 
-
         Pageable pageable = PageRequest.of(page, size);
         Page<Product> products = productRepository.findAll(specification, pageable);
         List<ProductResponse> productResponses = new ArrayList<>();
-        for (Product product : products.getContent()) {
-            Optional<ProductPrice> productPrice = getProductPrice(product);
 
-            if (productPrice.isEmpty()) continue;
-            productResponses.add(buildProductResponse(productPrice.get().getVendor(), product.getCategory(), product, productPrice.get()));
+        for (Product product : products.getContent()) {
+            Optional<ProductPrice> productPriceIsActive = getProductPrice(product);
+
+            if (productPriceIsActive.isEmpty()) continue;
+
+            Vendor vendor = productPriceIsActive.get().getVendor();
+
+            productResponses.add(buildProductResponse(vendor, product.getCategory(), product, productPriceIsActive.get()));
         }
 
         return new PageImpl<>(productResponses, pageable, products.getTotalElements());
@@ -99,12 +101,42 @@ public class ProductServiceImpl implements ProductService {
 
     @Override
     public ProductResponse update(ProductRequest request) {
-        return null;
+        Product product = findById(request.getId());
+        Vendor vendor = vendorService.getById(request.getVendorId());
+        Category category = categoryService.getOrSave(request.getCategory());
+
+        Optional<ProductPrice> productPriceIsActive = getProductPrice(product);
+
+        product.setName(request.getProductName());
+        product.setCategory(category);
+
+        if (productPriceIsActive.isPresent() && request.getPrice().equals(productPriceIsActive.get().getPrice())) {
+            productPriceIsActive.get().setStock(request.getStock());
+
+            productRepository.save(product);
+
+            return buildProductResponse(vendor, product.getCategory(), product, productPriceIsActive.get());
+        }
+
+        productPriceIsActive.ifPresent(productPrice -> productPrice.setIsActive(false));
+
+        ProductPrice newProductPrice = ProductPrice.builder()
+                .price(request.getPrice())
+                .stock(request.getStock())
+                .product(product)
+                .vendor(vendor)
+                .isActive(true)
+                .build();
+
+        productPriceService.create(newProductPrice);
+
+        return buildProductResponse(vendor, product.getCategory(), product, newProductPrice);
     }
 
     @Override
     public void delete(String id) {
-
+        Product product = findById(id);
+        product.setIsActive(false);
     }
 
     @Override
