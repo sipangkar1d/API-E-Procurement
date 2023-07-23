@@ -1,26 +1,26 @@
 package com.enigma.procurement.entity;
 
-import lombok.*;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 import org.hibernate.annotations.GenericGenerator;
 
 import javax.persistence.*;
 
-@Getter
-@Setter
-@Builder(toBuilder = true)
+@Data
 @AllArgsConstructor
 @NoArgsConstructor
+@Builder(toBuilder = true)
 @Entity
-@Table(name = "m_warehouse")
-public class Warehouse {
+@Table(name = "m_product_warehouse")
+public class ProductOnWarehouse {
     @Id
     @GenericGenerator(strategy = "uuid2", name = "uuid")
     @GeneratedValue(generator = "uuid")
-    @Column(name = "warehouse_id")
+    @Column(name = "product_warehouse_id")
     private String id;
-
-    @OneToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "product_id")
-    private Product product;
+    private String name;
+    private String productCode;
     private Integer quantity;
 }

@@ -25,7 +25,6 @@ public class Product extends BaseEntity<String> {
     @Column(name = "name")
     private String name;
 
-
     @Column(name = "product_code")
     private String productCode;
 

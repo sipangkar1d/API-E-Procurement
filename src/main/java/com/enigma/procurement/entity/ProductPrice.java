@@ -17,7 +17,7 @@ import javax.persistence.*;
 @Table(name = "m_product_price")
 public class ProductPrice {
     @Id
-    @GenericGenerator(strategy = "uuid2" , name = "uuid")
+    @GenericGenerator(strategy = "uuid2", name = "uuid")
     @GeneratedValue(generator = "uuid")
     @Column(name = "product_price_id")
     private String id;
@@ -31,13 +31,9 @@ public class ProductPrice {
     @JsonBackReference
     private Product product;
 
-    @Column(name = "price")
+    @Column(name = "price", columnDefinition = "bigint check (price > 0)")
     private Long price;
-
-    @Column(name = "stock")
-    private Integer stock;
 
     @Column(name = "is_active")
     private Boolean isActive;
-
 }

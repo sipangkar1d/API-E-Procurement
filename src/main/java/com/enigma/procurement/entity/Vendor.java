@@ -22,9 +22,16 @@ public class Vendor extends BaseEntity<String> {
     @Column(name = "name")
     private String name;
 
-    @Column(name = "mobile_phone")
+    @Column(name = "email", unique = true)
+    private String email;
+
+    @Column(name = "mobile_phone", unique = true)
     private String mobilePhone;
 
     @Column(name = "address")
     private String address;
+
+    @OneToOne
+    @JoinColumn(name = "user_credential_id")
+    private UserCredential userCredential;
 }

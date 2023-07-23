@@ -8,10 +8,9 @@ import lombok.NoArgsConstructor;
 @Builder(toBuilder = true)
 @Getter
 public class ProductResponse {
-    String id;
-    String productName;
-    String category;
-    Long price;
-    Integer stock;
-    String vendorName;
+    private String productName;
+    private String productCode;
+    private String category;
+    private Long price;
+    private String vendorName;
 }

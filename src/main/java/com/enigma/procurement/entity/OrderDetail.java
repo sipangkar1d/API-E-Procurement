@@ -32,5 +32,6 @@ public class OrderDetail {
     private Order order;
 
 
+    @Column(name = "quantity")
     private Integer quantity;
 }

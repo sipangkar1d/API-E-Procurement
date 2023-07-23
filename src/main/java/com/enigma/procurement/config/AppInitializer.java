@@ -43,12 +43,13 @@ class AppInitializer implements CommandLineRunner {
             userCredentialRepository.saveAndFlush(userCredential);
 
             Admin admin = Admin.builder()
-                    .name("Daniel Sipangkar")
+                    .name("Super Admin")
                     .email(userCredential.getEmail())
                     .userCredential(userCredential)
                     .build();
             adminService.create(admin);
         }
+
         log.warn("Super Admin Account has been created on application.properties");
         log.warn("Super Admin Account has been created on application.properties");
         log.warn("Super Admin Account has been created on application.properties");

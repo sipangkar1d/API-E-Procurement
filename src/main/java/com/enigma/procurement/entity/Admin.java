@@ -12,7 +12,7 @@ import javax.persistence.*;
 @NoArgsConstructor
 @Entity
 @Table(name = "m_admin")
-public class Admin {
+public class Admin extends BaseEntity<String>{
     @Id
     @GenericGenerator(strategy = "uuid2" , name = "uuid")
     @GeneratedValue(generator = "uuid")
@@ -20,13 +20,12 @@ public class Admin {
     private String id;
 
     @Column(name = "name")
-    String name;
+    private String name;
+
     @Column(name = "email")
-    String email;
+    private String email;
 
     @OneToOne
     @JoinColumn(name = "user_credential_id")
     private UserCredential userCredential;
-
-
 }

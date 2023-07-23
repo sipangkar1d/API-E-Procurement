@@ -1,15 +1,20 @@
 package com.enigma.procurement.util;
 
-import com.enigma.procurement.entity.UserCredential;
 import org.springframework.data.domain.AuditorAware;
+import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 
 import java.util.Optional;
 
 public class AuditorAwareImpl implements AuditorAware<String>{
+
     @Override
     public Optional<String> getCurrentAuditor() {
-        UserCredential currentUser = (UserCredential) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-        return Optional.of(currentUser.getEmail());
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        if (authentication == null || !authentication.isAuthenticated()) {
+            return Optional.of("Super Admin");
+        }
+
+        return Optional.ofNullable(authentication.getName());
     }
 }

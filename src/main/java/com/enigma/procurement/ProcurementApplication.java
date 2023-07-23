@@ -20,7 +20,6 @@ import org.springframework.stereotype.Component;
 import java.util.List;
 
 @SpringBootApplication
-@EnableJpaAuditing
 public class ProcurementApplication {
 
     public static void main(String[] args) {

@@ -37,6 +37,5 @@ public class Order {
 
     @OneToMany(mappedBy = "order")
     @JsonManagedReference
-    @Column(name = "order_details")
     private List<OrderDetail> orderDetails;
 }

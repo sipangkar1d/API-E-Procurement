@@ -19,7 +19,7 @@ public class UserCredential {
     @Column(name = "user_id")
     private String id;
 
-    @Column(name = "email")
+    @Column(name = "email", unique = true)
     private String email;
 
     @Column(name = "password")

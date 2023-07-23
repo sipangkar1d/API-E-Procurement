@@ -1,11 +1,11 @@
 package com.enigma.procurement.service;
 
 import com.enigma.procurement.entity.Vendor;
+import org.springframework.data.domain.Page;
 
-import java.util.List;
 
 public interface VendorService {
     Vendor create(Vendor request);
-    List<Vendor> getAll();
+    Page<Vendor> getAll(Integer size, Integer page);
     Vendor getById(String id);
 }

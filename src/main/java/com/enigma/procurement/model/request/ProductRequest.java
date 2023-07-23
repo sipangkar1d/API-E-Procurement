@@ -8,11 +8,14 @@ import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 
 @Getter
+@Setter
 public class ProductRequest {
-    String id;
-    String productName;
-    String category;
-    Long price;
-    Integer stock;
-    String vendorId;
+    @NotBlank(message = "Required Product Name")
+    private String productName;
+    @NotBlank(message = "Required Category")
+    private String category;
+    @NotNull(message = "Required Price")
+    private Long price;
+    @NotBlank(message = "Required Vendor Id")
+    private String vendorId;
 }
