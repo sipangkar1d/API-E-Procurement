@@ -5,6 +5,7 @@ import com.enigma.procurement.service.VendorService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
@@ -12,7 +13,7 @@ import org.springframework.web.bind.annotation.*;
 @RequestMapping(path = "/api/v1/vendor")
 public class VendorController {
     private final VendorService vendorService;
-
+    @PreAuthorize("hasAnyRole('ADMIN','SUPER_ADMIN')")
     @GetMapping
     public ResponseEntity<?> getAllVendor(
             @RequestParam(name = "size", defaultValue = "10", required = false) Integer size,
@@ -27,5 +28,4 @@ public class VendorController {
                 .status(HttpStatus.OK.value())
                 .body(commonResponse);
     }
-
 }

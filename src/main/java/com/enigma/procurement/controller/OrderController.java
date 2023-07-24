@@ -31,7 +31,8 @@ import java.util.List;
 @RequestMapping(path = "/api/v1/order")
 public class OrderController {
     private final OrderService orderService;
-    @PreAuthorize("hasAnyRole('ADMIN')")
+
+    @PreAuthorize("hasAnyRole('ADMIN','SUPER_ADMIN')")
     @PostMapping()
     public ResponseEntity<?> createOrder(@RequestBody OrderRequest request) {
         CommonResponse<Object> commonResponse = CommonResponse.builder()
@@ -44,9 +45,17 @@ public class OrderController {
 
     @PreAuthorize("hasAnyRole('ADMIN','SUPER_ADMIN')")
     @GetMapping()
-    public ResponseEntity<?> downloadReportThisDay(){
+    public ResponseEntity<?> downloadReportThisDay() {
         List<DownloadResponse> responses = orderService.getByDay();
         String fileName = "src/main/resources/report-Day-" + LocalDate.now() + ".csv";
+        return getDownloadReport(responses, fileName);
+    }
+
+    @PreAuthorize("hasAnyRole('ADMIN','SUPER_ADMIN')")
+    @GetMapping("/{month}")
+    public ResponseEntity<?> downloadReportByMonth(@PathVariable(name = "month") Integer month) {
+        List<DownloadResponse> responses = orderService.getByMonth(month);
+        String fileName = "src/main/resources/report-Month-" + LocalDate.now() + ".csv";
         return getDownloadReport(responses, fileName);
 
     }
@@ -85,14 +94,5 @@ public class OrderController {
         } catch (IOException e) {
             throw new RuntimeException("Failed: ");
         }
-    }
-
-    @PreAuthorize("hasAnyRole('ADMIN','SUPER_ADMIN')")
-    @GetMapping("/{month}")
-    public ResponseEntity<?> downloadReportByMonth(@PathVariable(name = "month")Integer month){
-        List<DownloadResponse> responses = orderService.getByMonth(month);
-        String fileName = "src/main/resources/report-Month-" + LocalDate.now() + ".csv";
-        return getDownloadReport(responses, fileName);
-
     }
 }

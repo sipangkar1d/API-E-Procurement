@@ -8,6 +8,7 @@ import com.enigma.procurement.service.ProductPriceService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
@@ -16,6 +17,7 @@ import org.springframework.web.bind.annotation.*;
 public class ProductPriceController {
     private final ProductPriceService productPriceService;
 
+    @PreAuthorize("hasAnyRole('VENDOR')")
     @PutMapping()
      public ResponseEntity<?> updateProductPrice(@RequestBody ProductPriceRequest request){
         CommonResponse<Object> commonResponse = CommonResponse.builder()

@@ -9,6 +9,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
@@ -17,6 +18,7 @@ import org.springframework.web.bind.annotation.*;
 public class ProductController {
     private final ProductService productService;
 
+    @PreAuthorize("hasAnyRole('VENDOR')")
     @PostMapping()
     public ResponseEntity<?> addProduct(@RequestBody ProductRequest request){
         CommonResponse<Object> commonResponse = CommonResponse.builder()
@@ -28,6 +30,7 @@ public class ProductController {
         return ResponseEntity.status(HttpStatus.OK).body(commonResponse);
     }
 
+    @PreAuthorize("hasAnyRole('ADMIN','SUPER_ADMIN')")
     @GetMapping()
     public ResponseEntity<?> getAllProduct(
             @RequestParam(name = "size", defaultValue = "10", required = false) Integer size,

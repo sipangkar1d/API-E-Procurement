@@ -8,6 +8,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
@@ -16,6 +17,7 @@ import org.springframework.web.bind.annotation.*;
 public class ProductOnWarehouseController {
     private final ProductOnWarehouseService productOnWarehouseService;
 
+    @PreAuthorize("hasAnyRole('ADMIN','SUPER_ADMIN')")
     @GetMapping()
     public ResponseEntity<?> getAllProductOnWarehouse(
             @RequestParam(name = "size", defaultValue = "10", required = false) Integer size,

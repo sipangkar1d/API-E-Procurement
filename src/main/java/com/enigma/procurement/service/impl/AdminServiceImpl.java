@@ -17,7 +17,7 @@ public class AdminServiceImpl implements AdminService {
 
     @Override
     public Admin create(Admin request) {
-        return adminRepository.save(request);
+        return adminRepository.saveAndFlush(request);
     }
 
     @Override
